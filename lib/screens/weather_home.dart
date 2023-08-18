@@ -16,7 +16,7 @@ class WeatherHome extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Obx(() {
-          if (appController.isLoaded.value) {
+          if (appController.isLoaded.value == true) {
             return
               FutureBuilder(
                 future: appController.currentWeatherData,
@@ -123,7 +123,9 @@ class WeatherHome extends StatelessWidget {
                                     child: Wrap(
                                       spacing: 10,
                                       children: List.generate(
-                                          7,
+                                          weatherData.forecast!
+                                              .forecastday!
+                                              .first.hour!.length ,
                                               (index) =>
                                               InkWell(
                                                   onTap: () {
@@ -243,9 +245,9 @@ class WeatherHome extends StatelessWidget {
             time,
             style: GoogleFonts.roboto(color: Colors.white),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           Image.network(hour.condition!.icon!),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           Text(
             '${hour.tempC}°C',
             style: GoogleFonts.roboto(color: Colors.white),

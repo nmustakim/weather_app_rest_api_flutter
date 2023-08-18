@@ -19,17 +19,3 @@ class WeatherApp extends StatelessWidget {
   }
 }
 
-buildLocationPermissionScreen() {
-  return Scaffold(
-    body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Please allow location access',
-          style: TextStyle(
-              color: Colors.red, fontSize: 34, fontWeight: FontWeight.bold),
-        )
-      ],
-    ),
-  );
-}

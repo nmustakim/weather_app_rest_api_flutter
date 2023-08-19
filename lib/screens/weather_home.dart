@@ -154,7 +154,7 @@ class WeatherHome extends StatelessWidget {
                                                     builder: (context) =>
                                                         ForecastDetails()));
                                           },
-                                          child: buildForecastContainer(
+                                          child: buildHourlyForecastContainer(
                                               weatherData.forecast!
                                                   .forecastday!
                                                   .first.hour![index],
@@ -232,7 +232,7 @@ class WeatherHome extends StatelessWidget {
       );
   }
       else{
-      return Column(mainAxisAlignment: MainAxisAlignment.center,children: [
+      return const Column(mainAxisAlignment: MainAxisAlignment.center,children: [
         Center(child: CircularProgressIndicator(),)
       ],);}
     }
@@ -240,7 +240,7 @@ class WeatherHome extends StatelessWidget {
     );
   }
 
-  Widget buildForecastContainer(Hour hour, context) {
+  Widget buildHourlyForecastContainer(Hour hour, context) {
     DateTime dateTime = DateTime.parse(hour.time!);
     String time = DateFormat('HH:mm').format(dateTime);
     return Container(
@@ -256,11 +256,37 @@ class WeatherHome extends StatelessWidget {
             time,
             style: GoogleFonts.roboto(color: Colors.white),
           ),
-          const SizedBox(height: 16),
-          Image.network(hour.condition!.icon!),
-          const SizedBox(height: 16),
+
+          Image.network('https:${hour.condition!.icon??''}'),
+
           Text(
             '${hour.tempC}°C',
+            style: GoogleFonts.roboto(color: Colors.white),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget buildDailyForecastContainer(Forecastday forecastDay, context) {
+String day = DateFormat.MMMd().format(DateTime.parse(forecastDay.date.toString()));
+    return Container(
+      height: 146,
+      width: 60,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(30)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+        day,
+            style: GoogleFonts.roboto(color: Colors.white),
+          ),
+
+          Image.network('https:${forecastDay.day?.condition?.icon??''}'),
+
+          Text(
+            "${forecastDay.day?.maxtempC.toString() == null??" "}°C ${forecastDay.day?.mintempC.toString() == null??" "}°C",
             style: GoogleFonts.roboto(color: Colors.white),
           ),
         ],

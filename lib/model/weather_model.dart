@@ -232,7 +232,7 @@ class Forecastday {
     dateEpoch: json["date_epoch"],
     day: json["day"] == null ? null : Day.fromJson(json["day"]),
     astro: json["astro"] == null ? null : Astro.fromJson(json["astro"]),
-    hour: json["hour"] == null ? [] : List<Hour>.from(json["hour"]!.map((x) => Hour.fromJson(x))),
+    hour: json["hour"] == null ? [] : List<Hour>.from(json["hour"].map((x) => Hour.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -467,7 +467,7 @@ class Hour {
     windMph: json["wind_mph"]?.toDouble(),
     windKph: json["wind_kph"]?.toDouble(),
     windDegree: json["wind_degree"],
-    windDir: windDirValues.map[json["wind_dir"]]!,
+    windDir: windDirValues.map[json["wind_dir"]],
     pressureMb: json["pressure_mb"]?.toDouble(),
     pressureIn: json["pressure_in"]?.toDouble(),
     precipMm: json["precip_mm"]?.toDouble(),

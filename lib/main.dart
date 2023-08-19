@@ -13,7 +13,7 @@ class WeatherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final AppController appController = Get.put(AppController());
     return const MaterialApp(
         debugShowCheckedModeBanner: false, home: WeatherHome());
   }

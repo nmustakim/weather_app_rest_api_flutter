@@ -1,29 +1,23 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+
 import '../api_service/weather_service.dart';
-
-
 
 class AppController extends GetxController {
   @override
   void onInit() async {
+    super.onInit();
     await getUserLocation();
     currentWeatherData = getCurrentWeather(latitude.value, longitude.value);
-
-
-    super.onInit();
   }
 
   dynamic currentWeatherData;
-  dynamic hourlyWeatherData;
+
   var latitude = 0.0.obs;
   var longitude = 0.0.obs;
 
   var isLoaded = false.obs;
-
 
   getUserLocation() async {
     bool isLocationEnabled;
@@ -44,7 +38,9 @@ class AppController extends GetxController {
       }
     }
 
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((value) {
+    return await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high)
+        .then((value) {
       latitude.value = value.latitude;
       longitude.value = value.longitude;
       isLoaded.value = true;

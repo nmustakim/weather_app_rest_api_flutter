@@ -6,7 +6,8 @@ import '../controller/location_controller.dart';
 import '../controller/weather_controller.dart';
 import '../model/weather_model.dart';
 import 'city_forecast.dart';
-import 'forecast_details.dart';
+import 'forecast_day_details.dart';
+import 'forecast_hour_details.dart';
 
 class WeatherHome extends StatelessWidget {
   const WeatherHome({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class WeatherHome extends StatelessWidget {
           ],
         );
       } else if (weatherController.isLoaded.value == true) {
-        WeatherModel? weatherData = weatherController.currentWeatherData.value!;
+        WeatherModel weatherData = weatherController.currentWeatherData.value!;
         return Stack(
           children: [
             Image.asset(
@@ -149,7 +150,7 @@ class WeatherHome extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ForecastDetails(data:   weatherData.forecast!.forecastday!.first)));
+                                                      ForecastHourDetails(city:weatherData.location!.name!, hourlyData:   weatherData.forecast!.forecastday!.first.hour![index])));
                                         },
                                         child: buildHourlyForecastContainer(
                                             weatherData.forecast!.forecastday!
@@ -173,7 +174,7 @@ class WeatherHome extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ForecastDetails()));
+                                                      ForecastDayDetails(dailyData: weatherData.forecast!.forecastday![index],)));
                                         },
                                         child: buildDailyForecastContainer(
                                             weatherData

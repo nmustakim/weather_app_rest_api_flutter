@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ForecastDetails extends StatelessWidget {
-  final dynamic data;
-  ForecastDetails({Key? key, this.data}) : super(key: key);
+import '../model/weather_model.dart';
+
+class ForecastHourDetails extends StatelessWidget {
+  final Hour hourlyData;String city;
+  ForecastHourDetails({Key? key, required this.hourlyData,required this.city}) : super(key: key);
 int airQualityIndex = 174;
   @override
   Widget build(BuildContext context) {
@@ -38,14 +40,14 @@ int airQualityIndex = 174;
           title: Column(
             children: [
               Text(
-                data.uv.toString() ??'',
+                hourlyData.airQuality?.usEpaIndex.toString() ??'',
                 style: GoogleFonts.roboto(
                     fontSize: 34,
                     fontWeight: FontWeight.w400,
                     color: Colors.white),
               ),
               Text(
-                '19°| Mostly Clear',
+                '${hourlyData.tempC}°C | ${hourlyData.condition?.text??''}',overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.roboto(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,

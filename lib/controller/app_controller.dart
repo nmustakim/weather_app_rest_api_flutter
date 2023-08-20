@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:weather_app_rest_api_flutter/model/weather_model.dart';
 
 import '../api_service/weather_service.dart';
 
@@ -9,10 +9,9 @@ class AppController extends GetxController {
   void onInit() async {
     super.onInit();
     await getUserLocation();
-    currentWeatherData = getCurrentWeather(latitude.value, longitude.value);
   }
 
-  dynamic currentWeatherData;
+
 
   var latitude = 0.0.obs;
   var longitude = 0.0.obs;

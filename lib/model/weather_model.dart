@@ -12,43 +12,23 @@ class WeatherModel {
   Location? location;
   Current? current;
   Forecast? forecast;
-  Alerts? alerts;
 
   WeatherModel({
     this.location,
     this.current,
     this.forecast,
-    this.alerts,
   });
 
   factory WeatherModel.fromJson(Map<String, dynamic> json) => WeatherModel(
     location: json["location"] == null ? null : Location.fromJson(json["location"]),
     current: json["current"] == null ? null : Current.fromJson(json["current"]),
     forecast: json["forecast"] == null ? null : Forecast.fromJson(json["forecast"]),
-    alerts: json["alerts"] == null ? null : Alerts.fromJson(json["alerts"]),
   );
 
   Map<String, dynamic> toJson() => {
     "location": location?.toJson(),
     "current": current?.toJson(),
     "forecast": forecast?.toJson(),
-    "alerts": alerts?.toJson(),
-  };
-}
-
-class Alerts {
-  List<dynamic>? alert;
-
-  Alerts({
-    this.alert,
-  });
-
-  factory Alerts.fromJson(Map<String, dynamic> json) => Alerts(
-    alert: json["alert"] == null ? [] : List<dynamic>.from(json["alert"]!.map((x) => x)),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "alert": alert == null ? [] : List<dynamic>.from(alert!.map((x) => x)),
   };
 }
 
@@ -76,7 +56,7 @@ class Current {
   double? uv;
   double? gustMph;
   double? gustKph;
-  Map<String, double>? airQuality;
+  AirQuality? airQuality;
 
   Current({
     this.lastUpdatedEpoch,
@@ -116,7 +96,7 @@ class Current {
     windKph: json["wind_kph"]?.toDouble(),
     windDegree: json["wind_degree"],
     windDir: windDirValues.map[json["wind_dir"]]!,
-    pressureMb: json["pressure_mb"]?.toDouble(),
+    pressureMb: json["pressure_mb"],
     pressureIn: json["pressure_in"]?.toDouble(),
     precipMm: json["precip_mm"]?.toDouble(),
     precipIn: json["precip_in"]?.toDouble(),
@@ -125,11 +105,11 @@ class Current {
     feelslikeC: json["feelslike_c"]?.toDouble(),
     feelslikeF: json["feelslike_f"]?.toDouble(),
     visKm: json["vis_km"]?.toDouble(),
-    visMiles: json["vis_miles"]?.toDouble(),
-    uv: json["uv"]?.toDouble(),
+    visMiles: json["vis_miles"],
+    uv: json["uv"],
     gustMph: json["gust_mph"]?.toDouble(),
     gustKph: json["gust_kph"]?.toDouble(),
-    airQuality: Map.from(json["air_quality"]!).map((k, v) => MapEntry<String, double>(k, v?.toDouble())),
+    airQuality: json["air_quality"] == null ? null : AirQuality.fromJson(json["air_quality"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -156,7 +136,55 @@ class Current {
     "uv": uv,
     "gust_mph": gustMph,
     "gust_kph": gustKph,
-    "air_quality": Map.from(airQuality!).map((k, v) => MapEntry<String, dynamic>(k, v)),
+    "air_quality": airQuality?.toJson(),
+  };
+}
+
+class AirQuality {
+  double? co;
+  double? no2;
+  double? o3;
+  double? so2;
+  double? pm25;
+  double? pm10;
+  int? usEpaIndex;
+  int? gbDefraIndex;
+  String? aqiData;
+
+  AirQuality({
+    this.co,
+    this.no2,
+    this.o3,
+    this.so2,
+    this.pm25,
+    this.pm10,
+    this.usEpaIndex,
+    this.gbDefraIndex,
+    this.aqiData,
+  });
+
+  factory AirQuality.fromJson(Map<String, dynamic> json) => AirQuality(
+    co: json["co"]?.toDouble(),
+    no2: json["no2"]?.toDouble(),
+    o3: json["o3"]?.toDouble(),
+    so2: json["so2"]?.toDouble(),
+    pm25: json["pm2_5"]?.toDouble(),
+    pm10: json["pm10"]?.toDouble(),
+    usEpaIndex: json["us-epa-index"],
+    gbDefraIndex: json["gb-defra-index"],
+    aqiData: json["aqi_data"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "co": co,
+    "no2": no2,
+    "o3": o3,
+    "so2": so2,
+    "pm2_5": pm25,
+    "pm10": pm10,
+    "us-epa-index": usEpaIndex,
+    "gb-defra-index": gbDefraIndex,
+    "aqi_data": aqiData,
   };
 }
 
@@ -185,15 +213,21 @@ class Condition {
 }
 
 enum WindDir {
+  E,
   ESE,
+  S,
   SE,
-  SSE
+  SSE,
+  SSW
 }
 
 final windDirValues = EnumValues({
+  "E": WindDir.E,
   "ESE": WindDir.ESE,
+  "S": WindDir.S,
   "SE": WindDir.SE,
-  "SSE": WindDir.SSE
+  "SSE": WindDir.SSE,
+  "SSW": WindDir.SSW
 });
 
 class Forecast {
@@ -232,7 +266,7 @@ class Forecastday {
     dateEpoch: json["date_epoch"],
     day: json["day"] == null ? null : Day.fromJson(json["day"]),
     astro: json["astro"] == null ? null : Astro.fromJson(json["astro"]),
-    hour: json["hour"] == null ? [] : List<Hour>.from(json["hour"].map((x) => Hour.fromJson(x))),
+    hour: json["hour"] == null ? [] : List<Hour>.from(json["hour"]!.map((x) => Hour.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -309,7 +343,7 @@ class Day {
   int? dailyChanceOfSnow;
   Condition? condition;
   double? uv;
-  Map<String, double>? airQuality;
+  AirQuality? airQuality;
 
   Day({
     this.maxtempC,
@@ -348,15 +382,15 @@ class Day {
     totalprecipIn: json["totalprecip_in"]?.toDouble(),
     totalsnowCm: json["totalsnow_cm"]?.toDouble(),
     avgvisKm: json["avgvis_km"]?.toDouble(),
-    avgvisMiles: json["avgvis_miles"]?.toDouble(),
-    avghumidity: json["avghumidity"]?.toDouble(),
+    avgvisMiles: json["avgvis_miles"],
+    avghumidity: json["avghumidity"],
     dailyWillItRain: json["daily_will_it_rain"],
     dailyChanceOfRain: json["daily_chance_of_rain"],
     dailyWillItSnow: json["daily_will_it_snow"],
     dailyChanceOfSnow: json["daily_chance_of_snow"],
     condition: json["condition"] == null ? null : Condition.fromJson(json["condition"]),
-    uv: json["uv"]?.toDouble(),
-    airQuality: Map.from(json["air_quality"]!).map((k, v) => MapEntry<String, double>(k, v?.toDouble())),
+    uv: json["uv"],
+    airQuality: json["air_quality"] == null ? null : AirQuality.fromJson(json["air_quality"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -380,7 +414,7 @@ class Day {
     "daily_chance_of_snow": dailyChanceOfSnow,
     "condition": condition?.toJson(),
     "uv": uv,
-    "air_quality": Map.from(airQuality!).map((k, v) => MapEntry<String, dynamic>(k, v)),
+    "air_quality": airQuality?.toJson(),
   };
 }
 
@@ -418,7 +452,7 @@ class Hour {
   double? gustMph;
   double? gustKph;
   double? uv;
-  Map<String, double>? airQuality;
+  AirQuality? airQuality;
 
   Hour({
     this.timeEpoch,
@@ -467,7 +501,7 @@ class Hour {
     windMph: json["wind_mph"]?.toDouble(),
     windKph: json["wind_kph"]?.toDouble(),
     windDegree: json["wind_degree"],
-    windDir: windDirValues.map[json["wind_dir"]],
+    windDir: windDirValues.map[json["wind_dir"]]!,
     pressureMb: json["pressure_mb"]?.toDouble(),
     pressureIn: json["pressure_in"]?.toDouble(),
     precipMm: json["precip_mm"]?.toDouble(),
@@ -487,11 +521,11 @@ class Hour {
     willItSnow: json["will_it_snow"],
     chanceOfSnow: json["chance_of_snow"],
     visKm: json["vis_km"]?.toDouble(),
-    visMiles: json["vis_miles"]?.toDouble(),
+    visMiles: json["vis_miles"],
     gustMph: json["gust_mph"]?.toDouble(),
     gustKph: json["gust_kph"]?.toDouble(),
-    uv: json["uv"]?.toDouble(),
-    airQuality: Map.from(json["air_quality"]!).map((k, v) => MapEntry<String, double>(k, v?.toDouble())),
+    uv: json["uv"],
+    airQuality: json["air_quality"] == null ? null : AirQuality.fromJson(json["air_quality"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -528,7 +562,7 @@ class Hour {
     "gust_mph": gustMph,
     "gust_kph": gustKph,
     "uv": uv,
-    "air_quality": Map.from(airQuality!).map((k, v) => MapEntry<String, dynamic>(k, v)),
+    "air_quality": airQuality?.toJson(),
   };
 }
 

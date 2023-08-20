@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ForecastDetails extends StatelessWidget {
-  ForecastDetails({Key? key}) : super(key: key);
+  final dynamic data;
+  ForecastDetails({Key? key, this.data}) : super(key: key);
 int airQualityIndex = 174;
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ int airQualityIndex = 174;
           title: Column(
             children: [
               Text(
-                'Montreal',
+                data.uv.toString() ??'',
                 style: GoogleFonts.roboto(
                     fontSize: 34,
                     fontWeight: FontWeight.w400,

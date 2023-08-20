@@ -5,18 +5,17 @@ import '../api_service/weather_service.dart';
 import '../model/weather_model.dart';
 
 class WeatherController extends GetxController {
-Rx<WeatherModel?> currentWeatherData = Rx<WeatherModel?>(null);
+  Rx<WeatherModel?> currentWeatherData = Rx<WeatherModel?>(null);
   RxBool daySelected = false.obs;
   var isLoaded = false.obs;
   final appController = Get.find<LocationController>();
   @override
   void onInit() async {
     super.onInit();
-    await getWeather();
+   getWeather();
   }
 
   getWeather() async {
-
     currentWeatherData.value = await getCurrentWeather(
         appController.latitude.value, appController.longitude.value);
     isLoaded.value = true;

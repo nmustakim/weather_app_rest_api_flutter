@@ -54,11 +54,11 @@ class SplashScreenState extends State<SplashScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    IconButton(
+                   locationController.isLoaded.value? IconButton(
                         onPressed: () async {
                           await locationController.getUserLocation();
                         },
-                        icon: const Icon(Icons.refresh,color: Colors.white,)),
+                        icon: const Icon(Icons.refresh,color: Colors.white,)):Container()
 
                   ],
                 ),

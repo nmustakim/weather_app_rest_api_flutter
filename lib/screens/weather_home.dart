@@ -27,7 +27,7 @@ class WeatherHome extends StatelessWidget {
           ],
         );
       } else if (weatherController.isLoaded.value == true) {
-        WeatherModel weatherData = weatherController.currentWeatherData.value!;
+        WeatherModel? weatherData = weatherController.currentWeatherData.value!;
         return Stack(
           children: [
             Image.asset(
@@ -149,7 +149,7 @@ class WeatherHome extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ForecastDetails()));
+                                                      ForecastDetails(data:   weatherData.forecast!.forecastday!.first)));
                                         },
                                         child: buildHourlyForecastContainer(
                                             weatherData.forecast!.forecastday!

@@ -6,6 +6,7 @@ import 'package:weather_app_rest_api_flutter/screens/weather_home.dart';
 import 'controller/app_controller.dart';
 
 void main() {
+
   runApp(const WeatherApp());
 }
 
@@ -15,7 +16,7 @@ class WeatherApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return const MaterialApp(
+    return const GetMaterialApp(
         debugShowCheckedModeBanner: false, home: SplashScreen());
   }
 }

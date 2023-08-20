@@ -13,43 +13,57 @@ class SplashScreen extends StatefulWidget {
 class SplashScreenState extends State<SplashScreen> {
   final appController = Get.put(AppController());
   @override
-
-
   @override
   Widget build(BuildContext context) {
-    return Obx(() =>appController.isLoaded.value? const WeatherHome(): Scaffold(
-
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blue, Colors.deepPurple],
-          ),
-        ),
-        child: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.cloud,
-                size: 100,
-                color: Colors.white,
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Weather App',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+    return Obx(() => appController.isLoaded.value
+        ? const WeatherHome()
+        : Scaffold(
+            body: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.blue, Colors.deepPurple],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    )
-    );
+              child:  Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    const Stack(
+                      children: [
+                        Icon(
+                          Icons.cloud,
+                          size: 100,
+                          color: Colors.white,
+                        ),
+                        Icon(
+                          Icons.sunny,
+                          size: 50,
+                          color: Colors.orangeAccent,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Weather App',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          await appController.getUserLocation();
+                        },
+                        icon: const Icon(Icons.refresh,color: Colors.white,)),
+
+                  ],
+                ),
+              ),
+            ),
+          ));
   }
 }

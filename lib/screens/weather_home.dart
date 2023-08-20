@@ -74,7 +74,7 @@ class WeatherHome extends StatelessWidget {
               right: 0,
               bottom: 0,
               child: Container(
-                height: 300,
+                height: 280,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -197,7 +197,7 @@ class WeatherHome extends StatelessWidget {
                                 margin: const EdgeInsets.only(top: 12),
                                 child: Image.asset(
                                   'assets/images/rect4.png',
-                                  height: 86,
+                                  height: 75,
                                   width: 250,
                                 )),
                             Container(
@@ -247,7 +247,7 @@ Widget buildHourlyForecastContainer(Hour hour, context) {
   DateTime dateTime = DateTime.parse(hour.time!);
   String time = DateFormat('HH:mm').format(dateTime);
   return Container(
-    height: 146,
+    height: 135,
     width: 60,
     decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
@@ -273,7 +273,7 @@ Widget buildDailyForecastContainer(Forecastday forecastDay, context) {
   String day =
       DateFormat.MMMd().format(DateTime.parse(forecastDay.date.toString()));
   return Container(
-    height: 146,
+    height: 135,
     width: 60,
     decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
@@ -286,8 +286,9 @@ Widget buildDailyForecastContainer(Forecastday forecastDay, context) {
           style: GoogleFonts.roboto(color: Colors.white),
         ),
         Image.network('https:${forecastDay.day?.condition?.icon ?? ''}'),
+        const SizedBox(height: 6,),
         Text(
-          "${forecastDay.day?.avgtempC.toString() == null ?? " "}°C",
+          "${forecastDay.day?.avgtempC}°C",
           style: GoogleFonts.roboto(color: Colors.white),
         ),
       ],

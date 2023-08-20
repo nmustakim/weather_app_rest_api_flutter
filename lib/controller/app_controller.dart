@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:weather_app_rest_api_flutter/model/weather_model.dart';
+
 
 import '../api_service/weather_service.dart';
 
@@ -9,8 +10,8 @@ class AppController extends GetxController {
   void onInit() async {
     super.onInit();
     await getUserLocation();
-  }
 
+  }
 
 
   var latitude = 0.0.obs;
@@ -24,16 +25,19 @@ class AppController extends GetxController {
 
     isLocationEnabled = await Geolocator.isLocationServiceEnabled();
     if (!isLocationEnabled) {
-      return Future.error("Location is not enabled");
+      return Get.snackbar('Error', 'Location is not enabled');
+
     }
 
     userPermission = await Geolocator.checkPermission();
     if (userPermission == LocationPermission.deniedForever) {
-      return Future.error("Permission is denied forever");
+
+      return  Get.snackbar('Error', 'Permission is denied forever');
     } else if (userPermission == LocationPermission.denied) {
       userPermission = await Geolocator.requestPermission();
       if (userPermission == LocationPermission.denied) {
-        return Future.error("Permission is denied");
+      return  Get.snackbar('Error', 'Permission is denied');
+
       }
     }
 

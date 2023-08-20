@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:weather_app_rest_api_flutter/screens/splash_screen.dart';
 import 'package:weather_app_rest_api_flutter/screens/weather_home.dart';
 
-import 'controller/app_controller.dart';
+import 'controller/location_controller.dart';
 
 void main() {
 

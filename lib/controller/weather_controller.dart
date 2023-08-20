@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:weather_app_rest_api_flutter/controller/app_controller.dart';
+import 'package:weather_app_rest_api_flutter/controller/location_controller.dart';
 
 import '../api_service/weather_service.dart';
 import '../model/weather_model.dart';
@@ -8,7 +8,7 @@ class WeatherController extends GetxController {
 Rx<WeatherModel?> currentWeatherData = Rx<WeatherModel?>(null);
   RxBool daySelected = false.obs;
   var isLoaded = false.obs;
-  final appController = Get.find<AppController>();
+  final appController = Get.find<LocationController>();
   @override
   void onInit() async {
     super.onInit();

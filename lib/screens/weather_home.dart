@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../controller/app_controller.dart';
+import '../controller/location_controller.dart';
 import '../controller/weather_controller.dart';
 import '../model/weather_model.dart';
 import 'city_forecast.dart';

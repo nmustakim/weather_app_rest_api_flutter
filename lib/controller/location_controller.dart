@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../api_service/weather_service.dart';
 
-class AppController extends GetxController {
+class LocationController extends GetxController {
   @override
   void onInit() async {
     super.onInit();

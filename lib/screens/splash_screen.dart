@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:weather_app_rest_api_flutter/controller/app_controller.dart';
+import 'package:weather_app_rest_api_flutter/controller/location_controller.dart';
 import 'package:weather_app_rest_api_flutter/screens/weather_home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,11 +11,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
-  final appController = Get.put(AppController());
+  final locationController = Get.put(LocationController());
   @override
   @override
   Widget build(BuildContext context) {
-    return Obx(() => appController.isLoaded.value
+    return Obx(() => locationController.isLoaded.value
         ? const WeatherHome()
         : Scaffold(
             body: Container(
@@ -56,7 +56,7 @@ class SplashScreenState extends State<SplashScreen> {
                     ),
                     IconButton(
                         onPressed: () async {
-                          await appController.getUserLocation();
+                          await locationController.getUserLocation();
                         },
                         icon: const Icon(Icons.refresh,color: Colors.white,)),
 

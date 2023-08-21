@@ -122,7 +122,6 @@ class ForecastHourDetails extends StatelessWidget {
                             color: Colors.white, fontSize: 16),
                       ),
 
-                      const SizedBox(height: 12),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

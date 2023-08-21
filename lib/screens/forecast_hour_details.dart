@@ -182,7 +182,7 @@ class ForecastHourDetails extends StatelessWidget {
                   height: 13,
                 ),
                 SizedBox(
-                  height: 500,
+                  height: 350,
                   child: GridView(
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
@@ -216,6 +216,8 @@ class ForecastHourDetails extends StatelessWidget {
                       buildForecastDetailsCard('💦 HUMIDITY',
                           "${hourlyData.humidity.toString()}%" , hourlyData.humidity! < 25 ? 'Low':hourlyData.humidity! < 30 ? 'Fair':hourlyData.humidity! < 60 ? 'Healthy':hourlyData.humidity! < 70 ? 'Fair' : 'High')
 
+                      ,
+                      buildForecastDetailsCard('🌡️ FEELS LIKE', hourlyData.feelslikeC.toString(), hourlyData.feelslikeC! <= 0 ? 'Very Cold': hourlyData.feelslikeC! <= 10 ? 'Cold':hourlyData.feelslikeC! <= 15 ? 'Cool':hourlyData.feelslikeC! <= 20?"Warm":hourlyData.feelslikeC! <= 25?'Warm to hot':hourlyData.feelslikeC! <= 30 ? "Feeling hot":hourlyData.feelslikeC! < 40 ?"Very hot":hourlyData.feelslikeC! <= 50 ? "Extremely hot": "Too hot to live in")
                     ]
                   ),
                 ),
@@ -250,7 +252,7 @@ Widget buildForecastDetailsCard(String text1,text2,text3) {
                 fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),
           ),
          const SizedBox(height: 8,),
-         Text( text2,
+         Text( text2,overflow: TextOverflow.ellipsis,
             style: GoogleFonts.roboto(
                 fontSize: 24, fontWeight: FontWeight.w400, color: Colors.white),
           ),

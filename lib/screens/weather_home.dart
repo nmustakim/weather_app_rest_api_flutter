@@ -224,7 +224,7 @@ class WeatherHome extends StatelessWidget {
                             ),
                           ),
                     Stack(
-                      alignment: Alignment.center,
+                      alignment: Alignment.bottomCenter,
                       children: [
                         Container(
                             margin: const EdgeInsets.only(top: 12),
@@ -236,7 +236,7 @@ class WeatherHome extends StatelessWidget {
                         Container(
                           height: 55,
                           width: 55,
-                          margin: const EdgeInsets.only(top: 16, left: 20),
+                          margin: const EdgeInsets.only(top: 16, left: 20,bottom: 8),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(64),

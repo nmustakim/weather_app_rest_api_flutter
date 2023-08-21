@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../controller/weather_controller.dart';
 import '../model/weather_model.dart';
-import 'city_forecast.dart';
+import 'search_by_city.dart';
 import 'forecast_day_details.dart';
 import 'forecast_hour_details.dart';
 
@@ -15,7 +15,7 @@ class WeatherHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final WeatherController weatherController = Get.put(WeatherController());
     void reload() async {
-      await weatherController.getWeather();
+      await weatherController.getWeatherByLatLon();
     }
 
     return SafeArea(child: Scaffold(body: Obx(() {
@@ -72,7 +72,7 @@ class WeatherHome extends StatelessWidget {
                   height: 12,
                 ),
                 Text(
-                  weatherData.location?.name ?? '',
+                  '${weatherData.location!.name!}, ${weatherData.location!.country}',
                   style: GoogleFonts.roboto(fontSize: 34, color: Colors.white),
                 ),
                 Text(
@@ -261,7 +261,7 @@ class WeatherHome extends StatelessWidget {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const CityForecast())),
+                                  builder: (context) =>  SearchByCity())),
                           child: Image.asset(
                             'assets/images/list.png',
                           ),

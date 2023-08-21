@@ -6,17 +6,19 @@ import '../model/weather_model.dart';
 
 class WeatherController extends GetxController {
   Rx<WeatherModel?> currentWeatherData = Rx<WeatherModel?>(null);
+  Rx<WeatherModel?> foundWeatherData = Rx<WeatherModel?>(null);
   RxBool daySelected = false.obs;
   RxBool errorExist = false.obs;
   var isLoaded = false.obs;
+  var searchLoaded = false.obs;
   final appController = Get.find<LocationController>();
   @override
   void onInit() async {
     super.onInit();
-   getWeather();
+   getWeatherByLatLon();
   }
 
-  getWeather() async {
+  getWeatherByLatLon() async {
     try {
       currentWeatherData.value = await getCurrentWeather(
           appController.latitude.value, appController.longitude.value);
@@ -25,6 +27,23 @@ class WeatherController extends GetxController {
     }
     catch(error){
       errorExist.value = true;
+      Get.snackbar('Error', error.toString().contains('Failed host')==true? 'Check internet connectivity':error.toString());
+    }
+    finally{
+      update();
+    }
+  }
+  searchWeatherByCity(city)async{
+    foundWeatherData.value = null;
+    try {
+      foundWeatherData.value = await getWeatherByCity(
+        city);
+      searchLoaded.value = true;
+
+print(foundWeatherData.value);
+    }
+    catch(error){
+
       Get.snackbar('Error', error.toString().contains('Failed host')==true? 'Check internet connectivity':error.toString());
     }
     finally{

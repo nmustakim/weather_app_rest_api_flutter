@@ -128,9 +128,9 @@ class ForecastDayDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'see more',
+                            'See more',
                             style: GoogleFonts.roboto(
-                                color: Colors.grey, fontSize: 18),
+                                color: Colors.grey, fontSize: 16),
                           ),
                           IconButton(
                               icon: const Icon(

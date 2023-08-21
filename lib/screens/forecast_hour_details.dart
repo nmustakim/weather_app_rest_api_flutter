@@ -114,6 +114,9 @@ class ForecastHourDetails extends StatelessWidget {
                           children: coloredPortions,
                         ),
                       ),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Text(hourlyData.airQuality!.usEpaIndex! <= 1 ? "Good":hourlyData.airQuality!.usEpaIndex! <= 2?"Moderate":hourlyData.airQuality!.usEpaIndex! <= 3? "Unhealthy of Sensitive People":hourlyData.airQuality!.usEpaIndex! <= 4?"Unhealthy":hourlyData.airQuality!.usEpaIndex! <= 5?"Very Unhealthy":"Hazardous",
                         style: GoogleFonts.roboto(
                             color: Colors.white, fontSize: 16),

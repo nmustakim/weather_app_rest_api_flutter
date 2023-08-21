@@ -200,13 +200,9 @@ class WeatherHome extends StatelessWidget {
                             ),
                           ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 12),
-                          child: Image.asset(
-                            'assets/images/map_icon.png',
-                          ),
-                        ),
+
                         Stack(
                           alignment: Alignment.center,
                           children: [
@@ -218,32 +214,30 @@ class WeatherHome extends StatelessWidget {
                                   width: 250,
                                 )),
                             Container(
-                              height: 64,
-                              width: 64,
+                              height: 54,
+                              width: 54,
                               margin: const EdgeInsets.only(top: 16, left: 20),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(64),
                               ),
-                              child: const Icon(
-                                Icons.add_rounded,
-                                size: 44,
-                                color: Color(0xFF48319D),
+                              child:     Center(
+                                child: InkWell(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const SearchByCity())),
+                                  child: const Icon(
+                                    Icons.search,
+                                    size: 30,
+                                    color: Colors.black45,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        InkWell(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SearchByCity())),
-                          child: const Icon(
-                            Icons.search,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                        ),
+
                       ],
                     )
                   ],

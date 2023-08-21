@@ -72,7 +72,7 @@ class WeatherHome extends StatelessWidget {
                   height: 12,
                 ),
                 Text(
-                  '${weatherData.location!.name!}, ${weatherData.location!.country}',
+                  weatherData.location?.name ?? '',
                   style: GoogleFonts.roboto(fontSize: 34, color: Colors.white),
                 ),
                 Text(
@@ -261,9 +261,11 @@ class WeatherHome extends StatelessWidget {
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>  SearchByCity())),
-                          child: Image.asset(
-                            'assets/images/list.png',
+                                  builder: (context) => const SearchByCity())),
+                          child: Icon(
+                            Icons.search,
+                            size: 30,
+                            color: Colors.white,
                           ),
                         ),
                       ],

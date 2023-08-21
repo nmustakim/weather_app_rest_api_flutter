@@ -10,12 +10,13 @@ class WeatherController extends GetxController {
   RxBool daySelected = false.obs;
   RxBool errorExist = false.obs;
   var isLoaded = false.obs;
+  RxBool searchLoading = false.obs;
   var searchLoaded = false.obs;
   final appController = Get.find<LocationController>();
   @override
   void onInit() async {
     super.onInit();
-   getWeatherByLatLon();
+   await getWeatherByLatLon();
   }
 
   getWeatherByLatLon() async {
@@ -24,30 +25,33 @@ class WeatherController extends GetxController {
           appController.latitude.value, appController.longitude.value);
       isLoaded.value = true;
       errorExist.value = false;
-    }
-    catch(error){
+    } catch (error) {
       errorExist.value = true;
-      Get.snackbar('Error', error.toString().contains('Failed host')==true? 'Check internet connectivity':error.toString());
-    }
-    finally{
+      Get.snackbar(
+          'Error',
+          error.toString().contains('Failed host') == true
+              ? 'Check internet connectivity'
+              : error.toString());
+    } finally {
       update();
     }
   }
-  searchWeatherByCity(city)async{
-    foundWeatherData.value = null;
+
+  searchWeatherByCity(city) async {
+    searchLoading.value = true;
     try {
-      foundWeatherData.value = await getWeatherByCity(
-        city);
-      searchLoaded.value = true;
-
-print(foundWeatherData.value);
-    }
-    catch(error){
-
-      Get.snackbar('Error', error.toString().contains('Failed host')==true? 'Check internet connectivity':error.toString());
-    }
-    finally{
-      update();
+      foundWeatherData.value = null;
+      final data = await getWeatherByCity(city);
+      foundWeatherData.value = data;
+    } catch (error) {
+      Get.snackbar(
+        'Error',
+        error.toString().contains('Failed host')
+            ? 'Check internet connectivity'
+            : error.toString(),
+      );
+    } finally {
+      searchLoading.value = false;
     }
   }
 }

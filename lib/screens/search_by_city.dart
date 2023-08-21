@@ -5,21 +5,23 @@ import 'package:weather_app_rest_api_flutter/controller/weather_controller.dart'
 import 'package:weather_app_rest_api_flutter/model/weather_model.dart';
 
 class SearchByCity extends StatefulWidget {
-   const SearchByCity({super.key});
+  const SearchByCity({super.key});
 
   @override
   State<SearchByCity> createState() => _SearchByCityState();
 }
 
 class _SearchByCityState extends State<SearchByCity> {
-
-final searchController = TextEditingController();
-
+  final searchController = TextEditingController();
+  final weatherController = Get.find<WeatherController>();
   @override
   void dispose() {
     super.dispose();
+    weatherController.foundWeatherData.value = null;
     searchController.dispose();
   }
+
+  @override
   Widget build(BuildContext context) {
     final weatherController = Get.find<WeatherController>();
     return Scaffold(
@@ -49,20 +51,19 @@ final searchController = TextEditingController();
               height: 38,
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
-controller: searchController,
+                controller: searchController,
                 decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.only(left:16,top: 4),
+                    contentPadding: const EdgeInsets.only(left: 16, top: 4),
                     suffixIcon: InkWell(
-                      onTap: ()async{
-                        print(searchController.text);
-                        if(searchController.text.isEmpty){
-Get.snackbar('Err', 'Please type City');
-                        }
-                        else {
-                          await weatherController.searchWeatherByCity(
-                              searchController.text);
-                        }
-                      },
+                        onTap: ()  {
+                          print(searchController.text);
+                          if (searchController.text.isEmpty) {
+                            Get.snackbar('Err', 'Please type City');
+                          } else {
+                             weatherController
+                                .searchWeatherByCity(searchController.text);
+                          }
+                        },
                         child: const Icon(Icons.search)),
                     hintText: 'Search for a city',
                     filled: true,
@@ -76,17 +77,23 @@ Get.snackbar('Err', 'Please type City');
               height: 25,
             ),
             Obx(() {
-              if(!weatherController.searchLoaded.value && weatherController.foundWeatherData.value == null){
-                return Container();
+              if(weatherController.searchLoading.value  == true){
+                return const Column(mainAxisAlignment: MainAxisAlignment.center,children: [
+                  Center(child: CircularProgressIndicator(),)
+                ],);
               }
-             else if(weatherController.searchLoaded.value && weatherController.foundWeatherData.value != null){
+              else if (
+                  weatherController.foundWeatherData.value != null) {
                 return buildForecastTile(weatherController.foundWeatherData.value!);
               }
               else{
-               return const Center(child: CircularProgressIndicator(color: Colors.black,),);
-              }
-            })
+                return const Column(mainAxisAlignment: MainAxisAlignment.center,children: [
+                  Center(child: Text('No Data'),)
+                ],);
 
+              }
+            }
+              )
           ],
         ),
       ),
@@ -109,11 +116,11 @@ Get.snackbar('Err', 'Please type City');
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    weatherData.current!.tempC.toString(),
-                    style: GoogleFonts.inter(fontSize: 64, color: Colors.white),
+                    '${weatherData.current!.tempC?.toStringAsFixed(1)}°C',
+                    style: GoogleFonts.inter(fontSize: 54, color: Colors.white),
                   ),
                   Text(
-                  '${weatherData.forecast?.forecastday?.first.day?.maxtempC ?? ""}°C ${weatherData.forecast?.forecastday?.first.day?.mintempC ?? ""}°C',
+                    '${weatherData.forecast?.forecastday?.first.day?.maxtempC ?? ""}°C ${weatherData.forecast?.forecastday?.first.day?.mintempC ?? ""}°C',
                     style: GoogleFonts.inter(fontSize: 15, color: Colors.grey),
                   ),
                   const SizedBox(
@@ -123,12 +130,12 @@ Get.snackbar('Err', 'Please type City');
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                       '${weatherData.location!.name!}, ${weatherData.location!.country}',
+                        '${weatherData.location!.name!}, ${weatherData.location!.country}',
                         style: GoogleFonts.inter(
                             fontSize: 15, color: Colors.white),
                       ),
                       Text(
-                       weatherData.current!.condition!.text!,
+                        weatherData.current!.condition!.text!,
                         style: GoogleFonts.inter(
                             fontSize: 15, color: Colors.white),
                       )

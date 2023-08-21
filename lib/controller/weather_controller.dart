@@ -9,7 +9,7 @@ class WeatherController extends GetxController {
   Rx<WeatherModel?> foundWeatherData = Rx<WeatherModel?>(null);
   RxBool daySelected = false.obs;
   RxBool errorExist = false.obs;
-  var isLoaded = false.obs;
+  RxBool isLoading = false.obs;
   RxBool searchLoading = false.obs;
   var searchLoaded = false.obs;
   final appController = Get.find<LocationController>();
@@ -20,10 +20,10 @@ class WeatherController extends GetxController {
   }
 
   getWeatherByLatLon() async {
+    isLoading.value = true;
     try {
       currentWeatherData.value = await getCurrentWeather(
           appController.latitude.value, appController.longitude.value);
-      isLoaded.value = true;
       errorExist.value = false;
     } catch (error) {
       errorExist.value = true;
@@ -33,7 +33,7 @@ class WeatherController extends GetxController {
               ? 'Check internet connectivity'
               : error.toString());
     } finally {
-      update();
+      isLoading.value = false;
     }
   }
 

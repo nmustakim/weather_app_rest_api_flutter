@@ -223,49 +223,34 @@ class WeatherHome extends StatelessWidget {
                               ),
                             ),
                           ),
-                    Row(
+                    Stack(
+                      alignment: Alignment.center,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(left: 12),
-                          child: Image.asset(
-                            'assets/images/map_icon.png',
-                          ),
-                        ),
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.only(top: 12),
-                                child: Image.asset(
-                                  'assets/images/rect4.png',
-                                  height: 75,
-                                  width: 250,
-                                )),
-                            Container(
-                              height: 64,
-                              width: 64,
-                              margin: const EdgeInsets.only(top: 16, left: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(64),
-                              ),
-                              child: const Icon(
-                                Icons.add_rounded,
-                                size: 44,
-                                color: Color(0xFF48319D),
-                              ),
-                            ),
-                          ],
-                        ),
-                        InkWell(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SearchByCity())),
-                          child: Icon(
-                            Icons.search,
-                            size: 30,
+                            margin: const EdgeInsets.only(top: 12),
+                            child: Image.asset(
+                              'assets/images/rect4.png',
+                              height: 75,
+                              width: 250,
+                            )),
+                        Container(
+                          height: 55,
+                          width: 55,
+                          margin: const EdgeInsets.only(top: 16, left: 20),
+                          decoration: BoxDecoration(
                             color: Colors.white,
+                            borderRadius: BorderRadius.circular(64),
+                          ),
+                          child:     InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SearchByCity())),
+                            child: const Icon(
+                              Icons.search,
+                              size: 30,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ],

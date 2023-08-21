@@ -117,7 +117,7 @@ class _SearchByCityState extends State<SearchByCity> {
                 children: [
                   Text(
                     '${weatherData.current!.tempC?.toStringAsFixed(1)}°C',
-                    style: GoogleFonts.inter(fontSize: 54, color: Colors.white),
+                    style: GoogleFonts.inter(fontSize: 44, color: Colors.white),
                   ),
                   Text(
                     '${weatherData.forecast?.forecastday?.first.day?.maxtempC ?? ""}°C ${weatherData.forecast?.forecastday?.first.day?.mintempC ?? ""}°C',
@@ -144,13 +144,12 @@ class _SearchByCityState extends State<SearchByCity> {
                 ],
               )),
           Positioned(
-              right: 0,
-              bottom: 80,
-              child: Image.asset(
-                'assets/images/mid_rain.png',
-                height: 160,
-                width: 160,
-              ))
+            right: 0,
+
+            bottom: 80,
+            child: Image.network(
+                'https:${weatherData.current!.condition?.icon ?? ''}'),
+          )
         ],
       ),
     );

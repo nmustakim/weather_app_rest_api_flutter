@@ -121,12 +121,14 @@ class ForecastDayDetails extends StatelessWidget {
                           children: coloredPortions,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 12),
+                      Text(dailyData.day!.airQuality!.usEpaIndex! <= 1 ? "Good":dailyData.day!.airQuality!.usEpaIndex! <= 2?"Moderate":dailyData.day!.airQuality!.usEpaIndex! <= 3? "Unhealthy of Sensitive People":dailyData.day!.airQuality!.usEpaIndex! <= 4?"Unhealthy":dailyData.day!.airQuality!.usEpaIndex! <= 5?"Very Unhealthy":"Hazardous",style: GoogleFonts.roboto(
+                      color: Colors.white, fontSize: 16)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'See more',
+                            'see more',
                             style: GoogleFonts.roboto(
                                 color: Colors.grey, fontSize: 18),
                           ),

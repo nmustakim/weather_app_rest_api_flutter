@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../controller/location_controller.dart';
 import '../controller/weather_controller.dart';
 import '../model/weather_model.dart';
 import 'city_forecast.dart';
@@ -20,14 +19,45 @@ class WeatherHome extends StatelessWidget {
     }
 
     return SafeArea(child: Scaffold(body: Obx(() {
-      if (weatherController.isLoaded.value != true) {
-        return const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(child: CircularProgressIndicator()),
-          ],
+      if (weatherController.errorExist.value) {
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.blue, Colors.deepPurple],
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                  child: InkWell(
+                      onTap: () => reload(),
+                      child: const Icon(
+                        Icons.refresh,
+                        size: 50,
+                        color: Colors.white,
+
+                      )))
+            ],
+          ),
         );
-      } else if (weatherController.isLoaded.value == true) {
+      } else if (!weatherController.isLoaded.value) {
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.blue, Colors.deepPurple],
+            ),
+          ),
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Center(child: CircularProgressIndicator(color: Colors.white,))],
+          ),
+        );
+      } else if (weatherController.currentWeatherData.value != null) {
         WeatherModel weatherData = weatherController.currentWeatherData.value!;
         return Stack(
           children: [
@@ -150,7 +180,12 @@ class WeatherHome extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ForecastHourDetails(city:weatherData.location!.name!, hourlyData:   weatherData.forecast!.forecastday!.first.hour![index])));
+                                                      ForecastHourDetails(
+                                                          hourlyData: weatherData
+                                                              .forecast!
+                                                              .forecastday!
+                                                              .first
+                                                              .hour![index])));
                                         },
                                         child: buildHourlyForecastContainer(
                                             weatherData.forecast!.forecastday!
@@ -174,7 +209,12 @@ class WeatherHome extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ForecastDayDetails(dailyData: weatherData.forecast!.forecastday![index],)));
+                                                      ForecastDayDetails(
+                                                        dailyData: weatherData
+                                                                .forecast!
+                                                                .forecastday![
+                                                            index],
+                                                      )));
                                         },
                                         child: buildDailyForecastContainer(
                                             weatherData
@@ -235,9 +275,27 @@ class WeatherHome extends StatelessWidget {
           ],
         );
       } else {
-        return const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Center(child: CircularProgressIndicator())],
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.blue, Colors.deepPurple],
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                  child: IconButton(
+                      onPressed: () => reload(),
+                      icon: const Icon(
+                        Icons.refresh,
+                        size: 50,
+                        color: Colors.white,
+                      )))
+            ],
+          ),
         );
       }
     })));
@@ -287,7 +345,9 @@ Widget buildDailyForecastContainer(Forecastday forecastDay, context) {
           style: GoogleFonts.roboto(color: Colors.white),
         ),
         Image.network('https:${forecastDay.day?.condition?.icon ?? ''}'),
-        const SizedBox(height: 6,),
+        const SizedBox(
+          height: 6,
+        ),
         Text(
           "${forecastDay.day?.avgtempC}°C",
           style: GoogleFonts.roboto(color: Colors.white),

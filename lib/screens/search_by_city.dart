@@ -56,7 +56,6 @@ class _SearchByCityState extends State<SearchByCity> {
                     contentPadding: const EdgeInsets.only(left: 16, top: 4),
                     suffixIcon: InkWell(
                         onTap: ()  {
-                          print(searchController.text);
                           if (searchController.text.isEmpty) {
                             Get.snackbar('Err', 'Please type City');
                           } else {
@@ -79,7 +78,7 @@ class _SearchByCityState extends State<SearchByCity> {
             Obx(() {
               if(weatherController.searchLoading.value  == true){
                 return const Column(mainAxisAlignment: MainAxisAlignment.center,children: [
-                  Center(child: CircularProgressIndicator(),)
+                  Center(child: CircularProgressIndicator(color: Colors.white,),)
                 ],);
               }
               else if (
@@ -129,15 +128,21 @@ class _SearchByCityState extends State<SearchByCity> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${weatherData.location!.name!}, ${weatherData.location!.country}',
-                        style: GoogleFonts.inter(
-                            fontSize: 15, color: Colors.white),
+                      Expanded(
+                        child: Text(
+                          '${weatherData.location!.name!}, ${weatherData.location!.country}',
+                          style: GoogleFonts.inter(
+                              fontSize: 15, color: Colors.white),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      Text(
-                        weatherData.current!.condition!.text!,
-                        style: GoogleFonts.inter(
-                            fontSize: 15, color: Colors.white),
+                      Expanded(
+                        child: Text(
+                          weatherData.current!.condition!.text!,
+                          style: GoogleFonts.inter(
+                              fontSize: 15, color: Colors.white),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       )
                     ],
                   )

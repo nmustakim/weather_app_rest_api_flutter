@@ -58,6 +58,7 @@ class ForecastDayDetails extends StatelessWidget {
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFFEBEBF5).withOpacity(0.6)),
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(
                 height: 17,

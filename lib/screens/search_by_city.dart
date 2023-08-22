@@ -136,13 +136,11 @@ class _SearchByCityState extends State<SearchByCity> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Expanded(
-                        child: Text(
-                          weatherData.current!.condition!.text!,
-                          style: GoogleFonts.inter(
-                              fontSize: 15, color: Colors.white),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        weatherData.current!.condition!.text!,
+                        style: GoogleFonts.inter(
+                            fontSize: 15, color: Colors.white),
+                        overflow: TextOverflow.ellipsis,
                       )
                     ],
                   )

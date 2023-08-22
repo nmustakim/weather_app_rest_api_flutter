@@ -10,4 +10,3 @@ Features:
 * MVC Architecture
 
 
-![](C:/Users/PC/Downloads/weather_app_colage.png)

@@ -10,4 +10,4 @@ Features:
 * MVC Architecture
 
 
-lib/weather_app_colage.png
+![](C:/Users/PC/Downloads/weather_app_colage.png)

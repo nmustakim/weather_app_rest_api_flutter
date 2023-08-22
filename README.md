@@ -6,6 +6,7 @@ Features:
 * Real-time Weather
 * Location service
 * Weather Details
+* REST API
 * Getx State Management
 * MVC Architecture
 
